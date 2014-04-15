@@ -656,7 +656,7 @@ Tinv, z, g, R)
                 partial = np.zeros(g)
                 partial[i] = 1.0
                 theta_grad[i] = self.value_at_point(z_tilde, Omega, prec = prec, deriv = partial)
--            for n in xrange(g):
+            for n in xrange(g):
                 for k in xrange(g):
                     non_theta_hess[n,k] =  2*np.pi*1.j*alpha[k,0] * (2*np.pi*1.j*theta_eval*alpha[n,0] + theta_grad[n]) + (2*np.pi*1.j*theta_grad[k]*alpha[n,0])
                     
@@ -787,9 +787,12 @@ if __name__=="__main__":
     Z = X + Y*1.0j
     Z = Z.flatten()
     U,V = theta.exp_and_osc_at_point([[z,0] for z in Z], Omega, batch=True)
-    Z = (V.reshape(60,60)).imag
+    Z1 = (V.reshape(60,60)).real
+    Z2 = (V.reshape(60,60)).imag
     print "\tPlotting..."
-    plt.contourf(X,Y,Z,7,antialiased=True)
+    plt.contourf(X,Y,Z1,7,antialiased=True)
+    plt.show()
+    plt.contourf(X,Y,Z2,7,antialiased=True)
     plt.show()
 
     SIZE = 100
